@@ -58,17 +58,11 @@ func returnSingleBooking(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	vars := mux.Vars(r)
 	key := vars["id"]
-	bookings := []models.Booking{}
-	db.Find(&bookings)
-	for _, booking := range bookings {
-		// string to int
-		s, err := strconv.Atoi(key)
-		if err == nil {
-			if booking.Id == s {
-				fmt.Println(booking)
-				fmt.Println("Endpoint Hit: Booking No:", key)
-				json.NewEncoder(w).Encode(booking)
-			}
-		}
+	i, err := strconv.Atoi(key)
+	var booking models.Booking
+	if err == nil {
+		db.First(&booking, i)
+		fmt.Println("Endpoint Hit: returnSingleBooking")
+		json.NewEncoder(w).Encode(booking)
 	}
 }
