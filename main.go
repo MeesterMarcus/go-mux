@@ -7,5 +7,5 @@ import (
 
 func main() {
 	db, _ := config.ConnectToDB()
-    controllers.HandleRequests(db)
+	controllers.HandleRequests(db)
 }
